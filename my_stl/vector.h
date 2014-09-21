@@ -106,14 +106,14 @@ namespace ly
 	class vector
 	{
 	public:	
-		typedef T* 	   							   iterator;
-		typedef const T* 						   const_iterator;
-		typedef reverse_iterator_base<T>    	   reverse_iterator;
-		typedef const reverse_iterator_base<T> 	   const_reverse_iterator;
-		typedef T      							   value_type;
-		typedef T&								   reference;
-		typedef const T&						   const_reference;
-		typedef size_t 							   size_type;
+		typedef T*                                 iterator;
+		typedef const T*                           const_iterator;
+		typedef reverse_iterator_base<T>           reverse_iterator;
+		typedef const reverse_iterator_base<T>     const_reverse_iterator;
+		typedef T                                  value_type;
+		typedef T&		                           reference;
+		typedef const T&                           const_reference;
+		typedef size_t 	                           size_type;
 
 		vector()
 			: first_ptr(NULL), first_free_ptr(NULL), end_ptr(NULL)
