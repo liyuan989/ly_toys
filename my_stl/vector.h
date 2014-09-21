@@ -111,7 +111,7 @@ namespace ly
 		typedef reverse_iterator_base<T>           reverse_iterator;
 		typedef const reverse_iterator_base<T>     const_reverse_iterator;
 		typedef T                                  value_type;
-		typedef T&		                           reference;
+		typedef T&                                 reference;
 		typedef const T&                           const_reference;
 		typedef size_t 	                           size_type;
 
