@@ -31,12 +31,12 @@ allocator
 	class allocator
 	{
 	public:
-		typedef T*				pointer;
-		typedef const T*		const_pointer;
-		typedef T&				reference;
-		typedef const T&		const_reference;
-		typedef T 				value_type;
-		typedef size_t 			size_type;
+		typedef T*              pointer;
+		typedef const T*        const_pointer;
+		typedef T&              reference;
+		typedef const T&        const_reference;
+		typedef T               value_type;
+		typedef size_t          size_type;
 
 		allocator()
 		{
@@ -159,32 +159,32 @@ normal_iterator_base
 		}
 
 		friend normal_iterator_base operator+(const normal_iterator_base &obj, 
-		                                       difference_type n)
+                                              difference_type n)
 		{
 			return normal_iterator_base(obj.pointer + n);
 		}
 
 		friend normal_iterator_base operator-(const normal_iterator_base &obj, 
-		                                       difference_type n)
+                                              difference_type n)
 		{
 			return normal_iterator_base(obj.pointer - n);
 		}
 
 		friend difference_type operator-(const normal_iterator_base &lhs,
-		                                 const normal_iterator_base &rhs)
+                                         const normal_iterator_base &rhs)
 		{
 			return lhs.pointer - rhs.pointer;
 		}
 
 		friend normal_iterator_base& operator+=(const normal_iterator_base &obj, 
-		                                       difference_type n)
+                                                difference_type n)
 		{
 			obj = obj + n;
 			return obj;
 		}
 
 		friend normal_iterator_base& operator-=(const normal_iterator_base &obj, 
-		                                       difference_type n)
+                                                difference_type n)
 		{
 			obj = obj - n;
 			return obj;
@@ -232,8 +232,8 @@ reverse_iterator_base
 	class reverse_iterator_base
 	{
 	public:
-		typedef T      value_type;
-		typedef size_t difference_type;
+		typedef T        value_type;
+		typedef size_t   difference_type;
 
 		reverse_iterator_base()
 			: pointer(NULL)
@@ -446,14 +446,14 @@ vector
 	class vector
 	{
 	public:	
-		typedef normal_iterator_base<T> 	   	   iterator;
-		typedef const normal_iterator_base<T> 	   const_iterator;
-		typedef reverse_iterator_base<T>    	   reverse_iterator;
-		typedef const reverse_iterator_base<T> 	   const_reverse_iterator;
-		typedef T      							   value_type;
-		typedef T&								   reference;
-		typedef const T&						   const_reference;
-		typedef size_t 							   size_type;
+		typedef normal_iterator_base<T>            iterator;
+		typedef const normal_iterator_base<T>      const_iterator;
+		typedef reverse_iterator_base<T>           reverse_iterator;
+		typedef const reverse_iterator_base<T>     const_reverse_iterator;
+		typedef T                                  value_type;
+		typedef T&                                 reference;
+		typedef const T&                           const_reference;
+		typedef size_t                             size_type;
 
 		vector()
 			: first_iter(NULL), last_iter(NULL), end_iter(NULL)
