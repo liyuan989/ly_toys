@@ -159,32 +159,32 @@ normal_iterator_base
 		}
 
 		friend normal_iterator_base operator+(const normal_iterator_base &obj, 
-                                              difference_type n)
+			                                  difference_type n)
 		{
 			return normal_iterator_base(obj.pointer + n);
 		}
 
 		friend normal_iterator_base operator-(const normal_iterator_base &obj, 
-                                              difference_type n)
+			                                  difference_type n)
 		{
 			return normal_iterator_base(obj.pointer - n);
 		}
 
 		friend difference_type operator-(const normal_iterator_base &lhs,
-                                         const normal_iterator_base &rhs)
+			                             const normal_iterator_base &rhs)
 		{
 			return lhs.pointer - rhs.pointer;
 		}
 
 		friend normal_iterator_base& operator+=(const normal_iterator_base &obj, 
-                                                difference_type n)
+			                                    difference_type n)
 		{
 			obj = obj + n;
 			return obj;
 		}
 
 		friend normal_iterator_base& operator-=(const normal_iterator_base &obj, 
-                                                difference_type n)
+			                                    difference_type n)
 		{
 			obj = obj - n;
 			return obj;
