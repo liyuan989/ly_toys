@@ -220,7 +220,7 @@ normal_iterator_base
 			return !(lhs < rhs);
 		}
 
-	protected:
+	private:
 		T *pointer;
 	};
 
@@ -365,7 +365,7 @@ reverse_iterator_base
 			return !(lhs < rhs);
 		}
 
-	protected:
+	private:
 		T *pointer;
 	};
 
