@@ -54,13 +54,26 @@ allocator
 
 		pointer allocate(size_type n)
 		{
-			pointer p = static_cast<pointer>(operator new[](n*sizeof(value_type)));
-			return p;
+			if (!n)
+			{
+				return NULL;
+			}
+			else
+			{
+				pointer p = static_cast<pointer>(operator new(n*sizeof(value_type)));
+				return p;
+			}
 		}
 
 		void deallocate(pointer p, size_type n)
 		{
-			operator delete[](static_cast<void*>(p));
+			if (!n)
+			{
+			}
+			else 
+			{
+				operator delete(static_cast<void*>(p));
+			}
 		}
 
 		size_type max_size() const
