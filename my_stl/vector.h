@@ -18,7 +18,15 @@ author:Li Yuan
 #define false 0
 #endif
 
-typedef unsigned int size_t;
+#ifndef SIZE_T
+#define SIZE_T
+typedef unsigned long int size_t;
+#endif
+
+#ifndef PTRDIFF_T
+#define PTRDIFF_T
+typedef long int ptrdiff_t;
+#endif
 
 namespace ly
 {
@@ -101,7 +109,7 @@ normal_iterator_base
 	{
 	public:
 		typedef T      value_type;
-		typedef size_t difference_type;
+		typedef ptrdiff_t difference_type;
 
 		normal_iterator_base()
 			: pointer(NULL)
@@ -245,8 +253,8 @@ reverse_iterator_base
 	class reverse_iterator_base
 	{
 	public:
-		typedef T        value_type;
-		typedef size_t   difference_type;
+		typedef T           value_type;
+		typedef ptrdiff_t   difference_type;
 
 		reverse_iterator_base()
 			: pointer(NULL)
