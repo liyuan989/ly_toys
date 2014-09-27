@@ -108,8 +108,8 @@ normal_iterator_base
 	class normal_iterator_base
 	{
 	public:
-		typedef T      value_type;
-		typedef ptrdiff_t difference_type;
+		typedef T           value_type;
+		typedef ptrdiff_t   difference_type;
 
 		normal_iterator_base()
 			: pointer(NULL)
