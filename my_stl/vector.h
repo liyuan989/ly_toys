@@ -19,13 +19,21 @@ author:Li Yuan
 #endif
 
 #ifndef SIZE_T
+#ifndef _SIZE_T
+#ifndef _SIZE_T_
 #define SIZE_T
 typedef unsigned long int size_t;
 #endif
+#endif
+#endif
 
 #ifndef PTRDIFF_T
+#ifndef _PTRDIFF_T
+#ifndef _PTRDIFF_T_
 #define PTRDIFF_T
 typedef long int ptrdiff_t;
+#endif
+#endif
 #endif
 
 namespace ly
@@ -109,67 +117,69 @@ normal_iterator_base
 	{
 	public:
 		typedef T           value_type;
+		typedef T*          pointer;
+		typedef const T*    const_pointer;
 		typedef ptrdiff_t   difference_type;
 
 		normal_iterator_base()
-			: pointer(NULL)
+			: ptr(NULL)
 		{
 		}
 
-		normal_iterator_base(T *p)
-			: pointer(p)
+		normal_iterator_base(pointer p)
+			: ptr(p)
 		{
 		}
 
-		T& operator*()
+		value_type& operator*()
 		{
-			return *pointer;
+			return *ptr;
 		}
 
-		const T& operator*() const
+		const value_type& operator*() const
 		{
-			return *pointer;
+			return *ptr;
 		}
 
-		T* operator->()
+		pointer operator->()
 		{
-			return pointer;
+			return ptr;
 		}
 
-		const T* operator->() const
+		const_pointer operator->() const
 		{
-			return pointer;
+			return ptr;
 		}
 
 		normal_iterator_base& operator++()
 		{
-			++pointer;
+			++ptr;
 			return *this;
 		}
 
 		normal_iterator_base operator++(int)
 		{
 			normal_iterator_base ret = *this;
-			++pointer;
+			++ptr;
 			return ret;
 		}
 
 		normal_iterator_base& operator--()
 		{
-			--pointer;
+			--ptr;
 			return *this;
 		}
 
 		normal_iterator_base operator--(int)
 		{
 			normal_iterator_base ret = *this;
-			--pointer;
+			--ptr;
 			return ret;
 		}
 
 		bool operator!() const
 		{
-			if (!pointer)
+			if (!ptr)
 			{
 				return true;
 			}
@@ -182,19 +192,19 @@ normal_iterator_base
 		friend normal_iterator_base operator+(const normal_iterator_base &obj, 
 		                                      difference_type n)
 		{
-			return normal_iterator_base(obj.pointer + n);
+			return normal_iterator_base(obj.ptr + n);
 		}
 
 		friend normal_iterator_base operator-(const normal_iterator_base &obj, 
 		                                      difference_type n)
 		{
-			return normal_iterator_base(obj.pointer - n);
+			return normal_iterator_base(obj.ptr - n);
 		}
 
 		friend difference_type operator-(const normal_iterator_base &lhs,
 		                                 const normal_iterator_base &rhs)
 		{
-			return lhs.pointer - rhs.pointer;
+			return lhs.ptr - rhs.ptr;
 		}
 
 		friend normal_iterator_base& operator+=(const normal_iterator_base &obj, 
@@ -213,7 +223,7 @@ normal_iterator_base
 
 		friend bool operator==(const normal_iterator_base &lhs, const normal_iterator_base &rhs)
 		{
-			return lhs.pointer == rhs.pointer;
+			return lhs.ptr == rhs.ptr;
 		}
 
 		friend bool operator!=(const normal_iterator_base &lhs, const normal_iterator_base &rhs)
@@ -223,12 +233,12 @@ normal_iterator_base
 
 		friend bool operator<(const normal_iterator_base &lhs, const normal_iterator_base &rhs)
 		{
-			return lhs.pointer < rhs.pointer;
+			return lhs.ptr < rhs.ptr;
 		}
 
 		friend bool operator>(const normal_iterator_base &lhs, const normal_iterator_base &rhs)
 		{
-			return lhs.pointer > rhs.pointer;
+			return lhs.ptr > rhs.ptr;
 		}
 
 		friend bool operator<=(const normal_iterator_base &lhs, const normal_iterator_base &rhs)
@@ -242,7 +252,144 @@ normal_iterator_base
 		}
 
 	private:
-		T *pointer;
+		pointer   ptr;
+	};
+
+/***********************************************************************
+normal_const_iterator_base
+***********************************************************************/
+
+	template<typename T>
+	class normal_const_iterator_base
+	{
+	public:
+		typedef T           value_type;
+		typedef T*          pointer;
+		typedef const T*    const_pointer;
+		typedef ptrdiff_t   difference_type;
+
+		normal_const_iterator_base()
+			: ptr(NULL)
+		{
+		}
+
+		normal_const_iterator_base(const_pointer p)
+			: ptr(p)
+		{
+		}
+
+		const value_type& operator*() const
+		{
+			return *ptr;
+		}
+
+		const_pointer operator->() const
+		{
+			return ptr;
+		}
+
+		normal_const_iterator_base& operator++()
+		{
+			++ptr;
+			return *this;
+		}
+
+		normal_const_iterator_base operator++(int)
+		{
+			normal_const_iterator_base ret = *this;
+			++ptr;
+			return ret;
+		}
+
+		normal_const_iterator_base& operator--()
+		{
+			--ptr;
+			return *this;
+		}
+
+		normal_const_iterator_base operator--(int)
+		{
+			normal_const_iterator_base ret = *this;
+			--ptr;
+			return ret;
+		}
+
+		bool operator!() const
+		{
+			if (!ptr)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		friend normal_const_iterator_base operator+(const normal_const_iterator_base &obj, 
+		                                            difference_type n)
+		{
+			return normal_const_iterator_base(obj.ptr + n);
+		}
+
+		friend normal_const_iterator_base operator-(const normal_const_iterator_base &obj, 
+		                                            difference_type n)
+		{
+			return normal_const_iterator_base(obj.ptr - n);
+		}
+
+		friend difference_type operator-(const normal_const_iterator_base &lhs,
+		                                 const normal_const_iterator_base &rhs)
+		{
+			return lhs.ptr - rhs.ptr;
+		}
+
+		friend normal_const_iterator_base& operator+=(const normal_const_iterator_base &obj, 
+		                                              difference_type n)
+		{
+			obj = obj + n;
+			return obj;
+		}
+
+		friend normal_const_iterator_base& operator-=(const normal_const_iterator_base &obj, 
+		                                              difference_type n)
+		{
+			obj = obj - n;
+			return obj;
+		}
+
+		friend bool operator==(const normal_const_iterator_base &lhs, const normal_const_iterator_base &rhs)
+		{
+			return lhs.ptr == rhs.ptr;
+		}
+
+		friend bool operator!=(const normal_const_iterator_base &lhs, const normal_const_iterator_base &rhs)
+		{
+			return !(lhs == rhs);
+		}
+
+		friend bool operator<(const normal_const_iterator_base &lhs, const normal_const_iterator_base &rhs)
+		{
+			return lhs.ptr < rhs.ptr;
+		}
+
+		friend bool operator>(const normal_const_iterator_base &lhs, const normal_const_iterator_base &rhs)
+		{
+			return lhs.ptr > rhs.ptr;
+		}
+
+		friend bool operator<=(const normal_const_iterator_base &lhs, const normal_const_iterator_base &rhs)
+		{
+			return !(lhs > rhs);
+		}
+
+		friend bool operator>=(const normal_const_iterator_base &lhs, const normal_const_iterator_base &rhs)
+		{
+			return !(lhs < rhs);
+		}
+
+	private:
+		const_pointer   ptr;
 	};
 
 /***********************************************************************
@@ -254,67 +401,69 @@ reverse_iterator_base
 	{
 	public:
 		typedef T           value_type;
+		typedef T*          pointer;
+		typedef const T*    const_pointer;
 		typedef ptrdiff_t   difference_type;
 
 		reverse_iterator_base()
-			: pointer(NULL)
+			: ptr(NULL)
 		{
 		}
 
-		reverse_iterator_base(T *p)
-			: pointer(p)
+		reverse_iterator_base(pointer *p)
+			: ptr(p)
 		{
 		}
 
-		T& operator*()
+		value_type& operator*()
 		{
-			return *pointer;
+			return *ptr;
 		}
 
-		const T& operator*() const
+		const value_type& operator*() const
 		{
-			return *pointer;
+			return *ptr;
 		}
 
-		T* operator->()
+		pointer operator->()
 		{
-			return pointer;
+			return ptr;
 		}
 
-		const T* operator->() const
+		const_pointer operator->() const
 		{
-			return pointer;
+			return ptr;
 		}
 
 		reverse_iterator_base& operator++()
 		{
-			--pointer;
+			--ptr;
 			return *this;
 		}
 
 		reverse_iterator_base operator++(int)
 		{
 			reverse_iterator_base ret = *this;
-			--pointer;
+			--ptr;
 			return ret;
 		}
 
 		reverse_iterator_base& operator--()
 		{
-			++pointer;
+			++ptr;
 			return *this;
 		}
 
 		reverse_iterator_base operator--(int)
 		{
 			reverse_iterator_base ret = *this;
-			++pointer;
+			++ptr;
 			return ret;
 		}
 
 		bool operator!() const
 		{
-			if (!pointer)
+			if (!ptr)
 			{
 				return false;
 			}
@@ -327,19 +476,19 @@ reverse_iterator_base
 		friend reverse_iterator_base operator+(const reverse_iterator_base &obj, 
 		                                       difference_type n)
 		{
-			return reverse_iterator_base(obj.pointer - n);
+			return reverse_iterator_base(obj.ptr - n);
 		}
 
 		friend reverse_iterator_base operator-(const reverse_iterator_base &obj, 
 		                                       difference_type n)
 		{
-			return reverse_iterator_base(obj.pointer + n);
+			return reverse_iterator_base(obj.ptr + n);
 		}
 
 		friend reverse_iterator_base& operator-(const reverse_iterator_base &lhs, 
 		                                        const reverse_iterator_base &rhs)
 		{
-			return lhs.pointer - rhs.pointer;
+			return lhs.ptr - rhs.ptr;
 		}
 
 		friend reverse_iterator_base& operator+=(const reverse_iterator_base &obj, 
@@ -358,7 +507,7 @@ reverse_iterator_base
 
 		friend bool operator==(const reverse_iterator_base &lhs, const reverse_iterator_base &rhs)
 		{
-			return lhs.pointer == rhs.pointer;
+			return lhs.ptr == rhs.ptr;
 		}
 
 		friend bool operator!=(const reverse_iterator_base &lhs, const reverse_iterator_base &rhs)
@@ -368,12 +517,12 @@ reverse_iterator_base
 
 		friend bool operator<(const reverse_iterator_base &lhs, const reverse_iterator_base &rhs)
 		{
-			return lhs.pointer > rhs.pointer;
+			return lhs.ptr > rhs.ptr;
 		}
 
 		friend bool operator>(const reverse_iterator_base &lhs, const reverse_iterator_base &rhs)
 		{
-			return lhs.pointer < rhs.pointer;
+			return lhs.ptr < rhs.ptr;
 		}
 
 		friend bool operator<=(const reverse_iterator_base &lhs, const reverse_iterator_base &rhs)
@@ -387,7 +536,144 @@ reverse_iterator_base
 		}
 
 	private:
-		T *pointer;
+		pointer   ptr;
+	};
+
+/***********************************************************************
+reverse_const_iterator_base
+***********************************************************************/
+
+	template<typename T>
+	class reverse_const_iterator_base
+	{
+	public:
+		typedef T           value_type;
+		typedef T*          pointer;
+		typedef const T*    const_pointer;
+		typedef ptrdiff_t   difference_type;
+
+		reverse_const_iterator_base()
+			: ptr(NULL)
+		{
+		}
+
+		reverse_const_iterator_base(const_pointer *p)
+			: ptr(p)
+		{
+		}
+
+		const value_type& operator*() const
+		{
+			return *ptr;
+		}
+
+		const_pointer operator->() const
+		{
+			return ptr;
+		}
+
+		reverse_const_iterator_base& operator++()
+		{
+			--ptr;
+			return *this;
+		}
+
+		reverse_const_iterator_base operator++(int)
+		{
+			reverse_const_iterator_base ret = *this;
+			--ptr;
+			return ret;
+		}
+
+		reverse_const_iterator_base& operator--()
+		{
+			++ptr;
+			return *this;
+		}
+
+		reverse_const_iterator_base operator--(int)
+		{
+			reverse_const_iterator_base ret = *this;
+			++ptr;
+			return ret;
+		}
+
+		bool operator!() const
+		{
+			if (!ptr)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+		friend reverse_const_iterator_base operator+(const reverse_const_iterator_base &obj, 
+		                                             difference_type n)
+		{
+			return reverse_const_iterator_base(obj.ptr - n);
+		}
+
+		friend reverse_const_iterator_base operator-(const reverse_const_iterator_base &obj, 
+		                                             difference_type n)
+		{
+			return reverse_const_iterator_base(obj.ptr + n);
+		}
+
+		friend reverse_const_iterator_base& operator-(const reverse_const_iterator_base &lhs, 
+		                                              const reverse_const_iterator_base &rhs)
+		{
+			return lhs.ptr - rhs.ptr;
+		}
+
+		friend reverse_const_iterator_base& operator+=(const reverse_const_iterator_base &obj, 
+		                                               difference_type n)
+		{
+			obj = obj - n;
+			return obj;
+		}
+
+		friend reverse_const_iterator_base& operator-=(const reverse_const_iterator_base &obj, 
+		                                               difference_type n)
+		{
+			obj = obj + n;
+			return obj;
+		}
+
+		friend bool operator==(const reverse_const_iterator_base &lhs, const reverse_const_iterator_base &rhs)
+		{
+			return lhs.ptr == rhs.ptr;
+		}
+
+		friend bool operator!=(const reverse_const_iterator_base &lhs, const reverse_const_iterator_base &rhs)
+		{
+			return !(lhs == rhs);
+		}
+
+		friend bool operator<(const reverse_const_iterator_base &lhs, const reverse_const_iterator_base &rhs)
+		{
+			return lhs.ptr > rhs.ptr;
+		}
+
+		friend bool operator>(const reverse_const_iterator_base &lhs, const reverse_const_iterator_base &rhs)
+		{
+			return lhs.ptr < rhs.ptr;
+		}
+
+		friend bool operator<=(const reverse_const_iterator_base &lhs, const reverse_const_iterator_base &rhs)
+		{
+			return !(lhs > rhs);
+		}
+
+		friend bool operator>=(const reverse_const_iterator_base &lhs, const reverse_const_iterator_base &rhs)
+		{
+			return !(lhs < rhs);
+		}
+
+	private:
+		const_pointer   ptr;
 	};
 
 /***********************************************************************
@@ -407,11 +693,11 @@ some algorithm function
 	}
 
 	template<typename Iterator>
-	int* uninitialized_copy(Iterator *first, Iterator *last, Iterator *result)
+	Iterator* uninitialized_copy(Iterator *first, Iterator *last, Iterator *result)
 	{
 		while(first != last)
 		{
-			new(result) int(*first);
+			new(result) Iterator(*first);
 			++first;
 			++result;
 		}
@@ -433,7 +719,7 @@ some algorithm function
 	{
 		while(first != last)
 		{
-			new(first) int(val);
+			new(first) Iterator(val);
 			++first;
 		}
 	}
@@ -468,9 +754,9 @@ vector
 	{
 	public:	
 		typedef normal_iterator_base<T>            iterator;
-		typedef const normal_iterator_base<T>      const_iterator;
+		typedef normal_const_iterator_base<T>      const_iterator;
 		typedef reverse_iterator_base<T>           reverse_iterator;
-		typedef const reverse_iterator_base<T>     const_reverse_iterator;
+		typedef reverse_const_iterator_base<T>     const_reverse_iterator;
 		typedef T                                  value_type;
 		typedef T&                                 reference;
 		typedef const T&                           const_reference;
